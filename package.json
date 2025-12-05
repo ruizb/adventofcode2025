@@ -12,10 +12,12 @@
     "test:watch": "vitest watch"
   },
   "devDependencies": {
+    "@types/node": "^24.10.1",
     "@typescript/native-preview": "^7.0.0-dev.20251205.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
   },
@@ -31,6 +33,8 @@
     }
   },
   "dependencies": {
+    "@effect/platform": "^0.93.6",
+    "@effect/platform-node": "^0.103.0",
     "effect": "^3.19.8"
   },
   "volta": {

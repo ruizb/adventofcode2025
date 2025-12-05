@@ -14,8 +14,14 @@ npm ci
 
 ### Run
 
+1 <= X <= 12
+1 <= Y <= 2
+
 ```sh
-TODO
+node src/dayX/partY.ts
+
+# Example
+# node src/day1/part1.ts
 ```
 
 ### Tests
