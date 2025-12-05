@@ -1,0 +1,39 @@
+{
+  "name": "adventofcode2025",
+  "version": "0.0.1",
+  "description": "Advent of code 2025 puzzles using Effect TS.",
+  "license": "ISC",
+  "author": "Benoit Ruiz",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsgo",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20251205.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "effect": "^3.19.8"
+  },
+  "volta": {
+    "node": "25.2.1"
+  }
+}
