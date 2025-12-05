@@ -1,5 +1,5 @@
 import { FileSystem, Path } from "@effect/platform"
-import { Brand, Effect, Array, String, Option, pipe, identity } from "effect"
+import { Brand, Data, Effect, Array, String, Option, pipe } from "effect"
 
 type DayNumber = number & Brand.Brand<"DayNumber">
 type DayPart = number & Brand.Brand<"DayPart">
@@ -38,20 +38,14 @@ const inputContent = (day: DayNumber, part: Option.Option<DayPart>) =>
     Effect.andThen(({ inputFilePath, fs }) => fs.readFileString(inputFilePath))
   )
 
-const ensureNonEmptyArray = <A>(
-  arr: A[] | readonly [A, ...A[]]
-): Effect.Effect<readonly [A, ...A[]], Error, never> =>
-  Array.match(arr, {
-    onEmpty: () => Effect.fail(new Error("Array cannot be empty")),
-    onNonEmpty: a => Effect.succeed(a),
-  })
+export class InputFileEmptyError extends Data.TaggedError(
+  "InputFileEmptyError"
+)<{}> {}
 
 export const inputLines = (day: DayNumber, part: Option.Option<DayPart>) =>
   Effect.Do.pipe(
     Effect.bind("content", () => inputContent(day, part)),
-    Effect.bind("lines", ({ content }) =>
-      pipe(String.split(content, "\n"), ensureNonEmptyArray)
-    ),
+    Effect.let("lines", ({ content }) => String.split(content, "\n")),
     Effect.andThen(({ lines }) =>
       pipe(
         Array.lastNonEmpty(lines),
@@ -62,5 +56,10 @@ export const inputLines = (day: DayNumber, part: Option.Option<DayPart>) =>
         })
       )
     ),
-    Effect.andThen(ensureNonEmptyArray)
+    Effect.andThen(
+      Array.match({
+        onEmpty: () => Effect.fail(InputFileEmptyError),
+        onNonEmpty: a => Effect.succeed(a),
+      })
+    )
   )

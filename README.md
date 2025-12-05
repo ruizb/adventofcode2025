@@ -31,5 +31,5 @@ npm test
 ```
 
 ```sh
-TODO
+npm run test utils.spec.ts
 ```
